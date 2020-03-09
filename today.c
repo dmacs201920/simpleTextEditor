@@ -391,7 +391,7 @@ void main()
     if(fp!=NULL)
     {
      mvwprintw(wtext,1,100,"%s","                                                                         ");
-     mvwprintw(wtext,1,100,"%s","please close the curent file %s to open another file",file);
+     mvwprintw(wtext,1,100,"please close the curent file '%s' to open another file",file);
      wrefresh(wtext);
      wgetch(wtext);
      mvwprintw(wtext,1,100,"%s","                                                                         ");
@@ -408,7 +408,7 @@ void main()
      noecho();
      fp=fopen(file,"r");
      if(fp==NULL)
-     {mvwprintw(wtext,5,10,"%s no such file exists",file);
+     {mvwprintw(wtext,5,10,"'%s' no such file exists",file);
       wgetch(wtext);
       strcpy(file,"");
       mvwprintw(wtext,5,10,"                                                                               ");
@@ -433,7 +433,7 @@ void main()
     else
     {
      mvwprintw(wtext,1,100,"%s","                                                                         ");
-     mvwprintw(wtext,1,100,"closing the file %s...",file);
+     mvwprintw(wtext,1,100,"closing the file '%s'...",file);
      wrefresh(wtext);
      wgetch(wtext);
      fclose(fp);
@@ -493,6 +493,13 @@ void main()
 
     break;
    case 5:////exiting//
+    if(fp!=NULL)
+    {
+     mvwprintw(wtext,1,100,"%s","                                                                         "); 
+     mvwprintw(wtext,1,100,"%s","please close the current file before exit...");
+     wrefresh(wtext);
+     break;
+    }
     update(wtext,3,40,1,163);
     mvwprintw(wtext,5,10,"%s","Exiting.....");
     wrefresh(wtext);
