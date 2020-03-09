@@ -81,26 +81,25 @@ void screen(WINDOW *w,int y,int x)
    return sp;
  */
 ////////////////////////////////////
-/*
-   void update(WINDOW *w,int sy,int ey,int sx,int ex)
-   {int dumx;
+void update(WINDOW *w,int sy,int ey,int sx,int ex)
+{  int dumx;
    while(sy<=ey)
    {
    for(dumx=sx;dumx<=ex;dumx++)
-   mvwprintw(w,dumx,sy,"%c",' ');
+   mvwprintw(w,sy,dumx,"%c",' ');
 
    wrefresh(w);
    sy++;
    }
    wrefresh(w);
-   }
- */
+}
 
+/*
 void update(WINDOW *w,int sy,int ey,int sx,int ex)
 {wclear(w);
  screen(w,42,165);
  wrefresh(w);
-}
+}*/
 
 /////////////////////////////////
 /*
