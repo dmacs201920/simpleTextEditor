@@ -1,0 +1,97 @@
+                                                         Om Sri Sai Ram.
+
+Writing Programs with NCURSES
+    by Eric S. Raymond and Zeyd M. Ben-Halim
+    updates since release 1.9.9e by Thomas Dickey 
+
+Contents
+
+    Introduction
+        A Brief History of Curses
+        Scope of This Document
+        Terminology
+    The Curses Library
+        An Overview of Curses
+            Compiling Programs using Curses
+            Updating the Screen
+            Standard Windows and Function Naming Conventions
+            Variables
+        Using the Library
+            Starting up
+            Output
+            Input
+            Using Forms Characters
+            Character Attributes and Color
+            Mouse Interfacing
+            Finishing Up
+        Function Descriptions
+            Initialization and Wrapup
+            Causing Output to the Terminal
+            Low-Level Capability Access
+            Debugging
+        Hints, Tips, and Tricks
+            Some Notes of Caution
+            Temporarily Leaving ncurses Mode
+            Using ncurses under xterm
+            Handling Multiple Terminal Screens
+            Testing for Terminal Capabilities
+            Tuning for Speed
+            Special Features of ncurses
+        Compatibility with Older Versions
+            Refresh of Overlapping Windows
+            Background Erase
+        XSI Curses Conformance
+    The Panels Library
+        Compiling With the Panels Library
+        Overview of Panels
+        Panels, Input, and the Standard Screen
+        Hiding Panels
+        Miscellaneous Other Facilities
+    The Menu Library
+        Compiling with the menu Library
+        Overview of Menus
+        Selecting items
+        Menu Display
+        Menu Windows
+        Processing Menu Input
+        Miscellaneous Other Features
+    The Forms Library
+        Compiling with the forms Library
+        Overview of Forms
+        Creating and Freeing Fields and Forms
+        Fetching and Changing Field Attributes
+            Fetching Size and Location Data
+            Changing the Field Location
+            The Justification Attribute
+            Field Display Attributes
+            Field Option Bits
+            Field Status
+            Field User Pointer
+        Variable-Sized Fields
+        Field Validation
+            TYPE_ALPHA
+            TYPE_ALNUM
+            TYPE_ENUM
+            TYPE_INTEGER
+            TYPE_NUMERIC
+            TYPE_REGEXP
+        Direct Field Buffer Manipulation
+        Attributes of Forms
+        Control of Form Display
+        Input Processing in the Forms Driver
+            Page Navigation Requests
+            Inter-Field Navigation Requests
+            Intra-Field Navigation Requests
+            Scrolling Requests
+            Field Editing Requests
+            Order Requests
+            Application Commands
+        Field Change Hooks
+        Field Change Commands
+        Form Options
+        Custom Validation Types
+            Union Types
+            New Field Types
+            Validation Function Arguments
+            Order Functions For Custom Types
+            Avoiding Problems
