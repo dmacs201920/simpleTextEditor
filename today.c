@@ -37,70 +37,62 @@ void screen(WINDOW *w,int y,int x)
  ////////////////////////
  wrefresh(w);
 }
-///////////////////////////////////////////////////////////////////
-/*
-   FILE *searchprintfile(WINDOW *w,int y,int x,FILE *sp,char search[100])
-   {
-   char s[100],a;
-   int px=0,py=1;
-   wmove(w,1,1);
+///////////edit mode/////////////////////
+typedef struct line
+{
+ char *str;
+ int strleng;
+ struct line *prev,*next;
+}line;
 
-   while((fscanf(sp,"%s",s)!=EOF) &&(py<y))
-   { px=px+strlen(s);
-   if (strcmp(s,search)==0)
-   {
-   attron(A_STANDOUT);
-   wprintw(w,"%s",s);
-   wrefresh(w);
-   wgetch(w);/////
-   attroff( A_STANDOUT);
-   }
-   else
-   { wprintw(w,"%s",s);
-   wgetch(w);/////
-   }
-   wrefresh(w);
-
-   while((a=fgetc(sp))==' '||a=='\n'||a=='\t')
-   { wprintw(w,"%c",a);
-   wgetch(w);/////
-
-   px++;
-   if(a=='\n')
-   py++;
-   }
-   fseek(sp,-1,1);
-   wrefresh(w);
-   if(px>(x-2))
-   {
-   px=px%(x-2);
-   py++;
-   }
-   }
-   wrefresh(w);
-   return sp;
- */
-////////////////////////////////////
-void update(WINDOW *w,int sy,int ey,int sx,int ex)
-{  int dumx;
-   while(sy<=ey)
-   {
-   for(dumx=sx;dumx<=ex;dumx++)
-   mvwprintw(w,sy,dumx,"%c",' ');
-
-   wrefresh(w);
-   sy++;
-   }
-   wrefresh(w);
+line *createlinenode()
+{
+ line *temp;
+ temp=(line*)calloc(sizeof(line),1);
+ temp->str=NULL;
+ temp->prev = temp->next=NULL;
+ return temp;
 }
 
+///////////////////////////////////////////////////////////////////
 /*
+void editmode(WINDOW *w,int y,int x,char file[100])
+{
+FILE *fp=fopen(file,"r");
+line *head=NULL,*trav=NULL,*temp=NULL;
+char ch,*str1,*str2,*string=(char*)calloc(sizeof(char),1);
+
+trav=head=createlinenode();
+trav->str=string;
+trav->strleng=0;
+
+}
+
+*/
+////////////////////////////////////
+
+void update(WINDOW *w,int sy,int ey,int sx,int ex)
+{  int dx=1,dy=3;
+   
+   while(dy<=40)
+   {
+  mvwprintw(w,dy,dx,"                                                                                                                                                                   |   ");
+  wrefresh(w);
+  wrefresh(w);
+   dy++;
+   }
+   wborder(w, '|', '|', '-','-','+','+','*','*');
+
+   wrefresh(w);
+}
+/*
+
 void update(WINDOW *w,int sy,int ey,int sx,int ex)
 {wclear(w);
  screen(w,42,165);
  wrefresh(w);
-}*/
-
+}
+*/
 /////////////////////////////////
 /*
    FILE *printfile(WINDOW *w,int y,int x,FILE *sp)
@@ -284,10 +276,10 @@ int  readmode(WINDOW *w,int wy,int wx,FILE *fp,char file[100],char search[100],i
     wmove(w,y,x);
     break;
    case 2: ///down
-    if(y<41)
+    if(y<40)
      y++;
 
-    else if(y==41 && !feof(sp))
+    else if(y==40 && !feof(sp))
     {  update(w,3,40,1,163);
      fread(&lnode,sizeof(lnode),1,lp);
      fseek(sp,lnode.pos,SEEK_SET);
@@ -309,7 +301,7 @@ int  readmode(WINDOW *w,int wy,int wx,FILE *fp,char file[100],char search[100],i
    case 5: //right
     if(x<164)
      x++;
-    else if(x==139&&(y-1)<28)
+    else if(x==139&&(y-1)<40)
     { x=0; y++; }
     wmove(w,y,x);
    default:
@@ -400,11 +392,13 @@ void main()
     }
     else
     {
-
+     mvwprintw(wtext,1,100,"                                                                               ");
      mvwprintw(wtext,1,100,"%s","File_Name::");
      echo();
      mvwscanw(wtext,1,112,"%s",file);
      noecho();
+     mvwprintw(wtext,5,10,"                                                                               ");
+
      fp=fopen(file,"r");
      if(fp==NULL)
      {mvwprintw(wtext,5,10,"'%s' no such file exists",file);
@@ -449,11 +443,12 @@ void main()
      wgetch(wtext);
      strcpy(file,"");
      mvwprintw(wtext,5,10,"                                                                               ");
-     mvwprintw(wtext,1,100,"%s","                                                                         ");
+     //mvwprintw(wtext,1,100,"%s","                                                                         ");
      wrefresh(wtext);
      break;
     }
     strcpy(search,"");
+    mvwprintw(wtext,1,100,"                                                                               ");
     mvwprintw(wtext,1,100,"%s","Search::");
     echo();
     mvwscanw(wtext,1,112,"%s",search);
@@ -468,11 +463,12 @@ void main()
      wgetch(wtext);
      strcpy(file,"");
      mvwprintw(wtext,5,10,"                                                                               ");
-     mvwprintw(wtext,1,100,"%s","                                                                         ");
+     //mvwprintw(wtext,1,100,"%s","                                                                         ");
      wrefresh(wtext);
      break;
     }
     strcpy(replace,"");
+    mvwprintw(wtext,1,100,"                                                                               ");
     mvwprintw(wtext,1,100,"%s","Replace::");
     echo();
     mvwscanw(wtext,1,112,"%s",search);
@@ -484,7 +480,7 @@ void main()
     mvwscanw(wtext,1,112,"%s",replace);
     noecho();
     mvwprintw(wtext,1,100,"%s","                                                                         ");
-    readmode(wtext,42,165,fp,file,search,2);
+   // readmode(wtext,42,165,fp,file,search,2);
     fclose(fp);
     replacemode(file,search,replace);
     fp=fopen(file,"r");
