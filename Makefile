@@ -1,6 +1,6 @@
-Exe: today.o
-	gcc -o Exe today.o -lncurses
-today.o: today.c
-	gcc -c today.c -lncurses
+Exe: Editor.o
+	gcc -o Exe Editor.o -lncurses
+Editor.o: Editor.c
+	gcc -c Editor.c -lncurses
 clean:
-	rm today.o Exe
+	rm Editor.o Exe
